@@ -55,7 +55,7 @@ const Navigator: React.FC<NavigatorProps> = ({
         onPress={() => handleNavigation('Dashboard')}
       >
         {ListIcon}
-        <LinkText>Listagem</LinkText>
+        <LinkText>List</LinkText>
       </LinkContainer>
 
       <LinkContainer
@@ -63,7 +63,7 @@ const Navigator: React.FC<NavigatorProps> = ({
         onPress={() => handleNavigation('FormPage')}
       >
         {DollarIcon}
-        <LinkText>Cadastrar</LinkText>
+        <LinkText>New Entry</LinkText>
       </LinkContainer>
     </Container>
   );

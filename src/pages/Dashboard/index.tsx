@@ -62,29 +62,29 @@ const Dashboard: React.FC = () => {
       <DashboardBody>
         <CardScroll>
           <Card
-            title="Entradas"
+            title="Credit"
             ammount={Number(balance.income)}
             icon={Income}
-            lastTransactionSentence="Última entrada dia 10 de julho"
+            lastTransactionSentence="Last billed on 10th DEC "
           />
 
           <Card
-            title="Saídas"
+            title="Debit"
             ammount={Number(balance.outcome)}
             icon={Outcome}
-            lastTransactionSentence="Última saída dia 7 de julho"
+            lastTransactionSentence="Last billed on 10th DEC"
           />
 
           <Card
             title="Total"
             ammount={Number(balance.total)}
             icon={Total}
-            lastTransactionSentence="De 01 a 10 de julho"
+            lastTransactionSentence="Yet to be billed"
             total
           />
         </CardScroll>
 
-        <Title>Listagem</Title>
+        <Title>List</Title>
       </DashboardBody>
     </Container>
   );

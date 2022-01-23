@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ small }: HeaderProps) => (
     <Content>
       <Logo source={logoImg} />
 
-      <Date>12 de Julho</Date>
+      <Date>19 Dec 21</Date>
     </Content>
   </Container>
 );

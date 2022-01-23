@@ -47,19 +47,19 @@ const FormPage: React.FC = () => {
         <Header small />
 
         <Content>
-          <Title>Cadastro</Title>
+          <Title>Enter new transaction</Title>
 
           <Form ref={formRef} onSubmit={handleFormSubmit}>
             <Input
               name="title"
-              placeholder="Nome"
+              placeholder="Name"
               returnKeyType="next"
               onSubmitEditing={() => valueInputRef.current?.focus()}
             />
             <Input
               ref={valueInputRef}
               name="value"
-              placeholder="Preço"
+              placeholder="Cost"
               returnKeyType="next"
               onSubmitEditing={() => categoryInputRef.current?.focus()}
             />
@@ -67,11 +67,11 @@ const FormPage: React.FC = () => {
             <Input
               ref={categoryInputRef}
               name="category"
-              placeholder="Categoria"
+              placeholder="Category"
               onSubmitEditing={() => formRef.current?.submitForm()}
             />
             <Button onPress={() => formRef.current?.submitForm()}>
-              <ButtonText>Enviar</ButtonText>
+              <ButtonText>Enter</ButtonText>
             </Button>
           </Form>
         </Content>
