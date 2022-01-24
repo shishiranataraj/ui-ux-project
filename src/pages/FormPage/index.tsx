@@ -1,5 +1,7 @@
 import React, { useRef, useCallback, useState } from 'react';
 import { TextInput, Alert, Keyboard } from 'react-native';
+import { AsyncStorage } from 'react-native';
+
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,15 +25,37 @@ const FormPage: React.FC = () => {
   const [showNavigation, setShowNavigation] = useState(true);
 
   const navigator = useNavigation();
+  
 
   const handleFormSubmit = useCallback(
     async (data: FormData) => {
-      await api.post('transactions', data);
+      console.log(data);
+      const {title, type, value} = data;
 
-      Alert.alert(
-        'Transação realizada com sucesso!',
-        'Você pode verificar as informações dela na página inicial!',
-      );
+      let income:any = await AsyncStorage.getItem('income')|| 0;
+      let outcome:any = await AsyncStorage.getItem('outcome') || 0;
+      const tsx = await AsyncStorage.getItem('transactions') || '[]';
+      let transactions = JSON.parse(tsx);
+      income = parseInt(income);
+      outcome = parseInt(outcome);
+
+      switch(type) {
+        case 'INCOME': 
+          income += parseInt(value);
+          break;
+        case 'OUTCOME':
+          outcome += parseInt(value);
+          break;
+        
+        default:
+          break;
+      }
+
+      transactions = [...transactions, {title, type, value}];
+      
+      await AsyncStorage.setItem('income', income + '');
+      await AsyncStorage.setItem('outcome', outcome + '');
+      await AsyncStorage.setItem('transactions', JSON.stringify(transactions));
 
       navigator.navigate('Dashboard');
     },
@@ -41,6 +65,14 @@ const FormPage: React.FC = () => {
   Keyboard.addListener('keyboardDidShow', () => setShowNavigation(false));
   Keyboard.addListener('keyboardDidHide', () => setShowNavigation(true));
 
+  const clearAppData = async function() {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+        await AsyncStorage.multiRemove(keys);
+    } catch (error) {
+        console.error('Error clearing app data.');
+    }
+}
   return (
     <>
       <Container>
@@ -63,13 +95,14 @@ const FormPage: React.FC = () => {
               returnKeyType="next"
               onSubmitEditing={() => categoryInputRef.current?.focus()}
             />
-            <TypeSelector name="type" />
             <Input
-              ref={categoryInputRef}
-              name="category"
-              placeholder="Category"
-              onSubmitEditing={() => formRef.current?.submitForm()}
+              ref={valueInputRef}
+              name="type"
+              placeholder="Type"
+              returnKeyType="next"
+              onSubmitEditing={() => categoryInputRef.current?.focus()}
             />
+            
             <Button onPress={() => formRef.current?.submitForm()}>
               <ButtonText>Enter</ButtonText>
             </Button>

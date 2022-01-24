@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
+import {Text} from 'react-native';
 import ListSVG from '../../assets/listagem.svg';
 import ActiveListSVG from '../../assets/listagem-ativada.svg';
 
@@ -46,7 +46,7 @@ const Navigator: React.FC<NavigatorProps> = ({
     currentPage === 'Dashboard' ? <ActiveListSVG /> : <ListSVG />;
 
   const DollarIcon =
-    currentPage === 'FormPage' ? <ActiveDollartSVG /> : <DollarSVG />;
+    currentPage === 'FormPage' ? <Text>₹</Text> : <Text>₹</Text>;
 
   return (
     <Container style={additionalStyle}>

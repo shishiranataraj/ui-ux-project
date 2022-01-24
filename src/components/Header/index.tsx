@@ -12,8 +12,6 @@ const Header: React.FC<HeaderProps> = ({ small }: HeaderProps) => (
   <Container small={small}>
     <Content>
       <Logo source={logoImg} />
-
-      <Date>19 Dec 21</Date>
     </Content>
   </Container>
 );

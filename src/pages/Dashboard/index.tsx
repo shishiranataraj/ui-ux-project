@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { useIsFocused } from '@react-navigation/native';
+import { AsyncStorage } from 'react-native';
 
 import Income from '../../assets/income.svg';
 import Outcome from '../../assets/outcome.svg';
@@ -27,7 +28,6 @@ interface Transaction {
   title: string;
   type: 'income' | 'outcome';
   value: number;
-  category: { title: string };
 }
 
 interface Balance {
@@ -44,12 +44,12 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadData() {
-      const response = await api.get('transactions');
-      const fetchedTransactions = response.data.transactions;
-      const fetchedBalance = response.data.balance;
+      const income = await AsyncStorage.getItem('income') || 0;
+      const outcome = await AsyncStorage.getItem('outcome') || 0;
+      const transactions = JSON.parse(await AsyncStorage.getItem('transactions') || []);
 
-      setTransactions(fetchedTransactions);
-      setBalance(fetchedBalance);
+      setBalance({income, outcome, total: income-outcome});
+      setTransactions(transactions);
     }
     if (isFocused) {
       loadData();
@@ -65,21 +65,18 @@ const Dashboard: React.FC = () => {
             title="Credit"
             ammount={Number(balance.income)}
             icon={Income}
-            lastTransactionSentence="Last billed on 10th DEC "
           />
 
           <Card
             title="Debit"
             ammount={Number(balance.outcome)}
             icon={Outcome}
-            lastTransactionSentence="Last billed on 10th DEC"
           />
 
           <Card
-            title="Total"
+            title="Balance"
             ammount={Number(balance.total)}
             icon={Total}
-            lastTransactionSentence="Yet to be billed"
             total
           />
         </CardScroll>
@@ -101,7 +98,6 @@ const Dashboard: React.FC = () => {
             title={item.title}
             type={item.type}
             value={item.value}
-            category={item.category.title}
           />
         )}
       />

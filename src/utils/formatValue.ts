@@ -1,7 +1,7 @@
 const formatValue = (value: number): string =>
-  Intl.NumberFormat('pt-BR', {
+  Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'BRL',
+    currency: 'INR',
   }).format(value);
 
 export default formatValue;
